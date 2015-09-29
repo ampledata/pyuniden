@@ -7,7 +7,7 @@ import setuptools
 
 setuptools.setup(
     name='uniden_api',
-    version=render_version(),
+    version='0.0.1',
     description='Uniden Scanner API',
     zip_safe=False,
     packages=['uniden_api'],

@@ -13,7 +13,7 @@ import serial
 import yaml
 
 
-import uniden_api.constants
+import pyuniden.constants
 
 
 class UnidenScannerError(Exception):
@@ -34,11 +34,11 @@ class UnidenScanner(object):
     ERR_LIST = ('NG','ORER','FER','ERR','')
 
     logger = logging.getLogger(__name__)
-    logger.setLevel(uniden_api.constants.LOG_LEVEL)
+    logger.setLevel(pyuniden.constants.LOG_LEVEL)
 
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(uniden_api.constants.LOG_LEVEL)
-    console_handler.setFormatter(uniden_api.constants.LOG_FORMAT)
+    console_handler.setLevel(pyuniden.constants.LOG_LEVEL)
+    console_handler.setFormatter(pyuniden.constants.LOG_FORMAT)
 
     logger.addHandler(console_handler)
     logger.propagate = False
@@ -59,11 +59,8 @@ class UnidenScanner(object):
         self.free_memory_block=None
         self.used_memory_block={}
         self.default_band_coverage = ()
-
-        self.open(port, speed)
-        #self.exit_program_mode()
-        #self.get_model()
-        #self.get_version()
+        
+        self.open(self.port, self.speed)
 
     def open(self, port, speed):
         """
@@ -529,7 +526,7 @@ class UnidenScanner(object):
 
         for sys in systems:
             sys_type = scanner_sys_type[sys['type']]
-            protected = uniden_api.constants.SCANNER_ONOFF[sys['protected']]
+            protected = pyuniden.constants.SCANNER_ONOFF[sys['protected']]
             i=self.create_system(sys_type,protected)
             if i==0: continue
             self.systems[i].load(**sys)

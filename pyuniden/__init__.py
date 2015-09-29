@@ -4,4 +4,4 @@
 """Uniden Scanner API Package."""
 
 
-import uniden_api.classes
+import pyuniden.classes

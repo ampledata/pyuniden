@@ -4,18 +4,18 @@ class Settings(object):
 
     """Scanner Settings class."""
     logger = logging.getLogger(__name__)
-    logger.setLevel(uniden_api.constants.LOG_LEVEL)
+    logger.setLevel(pyuniden.constants.LOG_LEVEL)
 
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(uniden_api.constants.LOG_LEVEL)
-    console_handler.setFormatter(uniden_api.constants.LOG_FORMAT)
+    console_handler.setLevel(pyuniden.constants.LOG_LEVEL)
+    console_handler.setFormatter(pyuniden.constants.LOG_FORMAT)
 
     logger.addHandler(console_handler)
     logger.propagate = False
 
     def __init__(self, scanner):
 
-        self.logger = logging.getLogger('uniden_api.Settings')
+        self.logger = logging.getLogger('pyuniden.Settings')
 
         self.scanner = scanner
         self.backlight={}
@@ -148,24 +148,24 @@ class Settings(object):
         """Dump scanner settings to dictionary."""
 
         bl=self.backlight
-        bl['event']=uniden_api.constants.EVENTS[bl['event']]
-        bl['dimmer']=uniden_api.constants.DIMMERS[bl['dimmer']]
+        bl['event']=pyuniden.constants.EVENTS[bl['event']]
+        bl['dimmer']=pyuniden.constants.DIMMERS[bl['dimmer']]
         bi=self.battery_info
-        bi['bat_save']=uniden_api.constants.ONOFF[bi['bat_save']]
+        bi['bat_save']=pyuniden.constants.ONOFF[bi['bat_save']]
         cp=self.com_port
         kb=self.key_beep
-        kb['lock']=uniden_api.constants.ONOFF[kb['lock']]
-        kb['safe']=uniden_api.constants.ONOFF[kb['safe']]
+        kb['lock']=pyuniden.constants.ONOFF[kb['lock']]
+        kb['safe']=pyuniden.constants.ONOFF[kb['safe']]
         om=self.opening_message
         pm=self.priority_mode
-        pm['pri_mode']=uniden_api.constants.PRI_MODES[pm['pri_mode']]
+        pm['pri_mode']=pyuniden.constants.PRI_MODES[pm['pri_mode']]
         agc=self.auto_gain_control
         lc=self.lcd_contrast
         so=self.scanner_option
-        so['ch_log']=uniden_api.constants.CH_LOGS[so['ch_log']]
-        so['disp_uid']=uniden_api.constants.ONOFF[so['disp_uid']]
-        so['g_att']=uniden_api.constants.ONOFF[so['g_att']]
-        so['p25_lpf']=uniden_api.constants.ONOFF[so['p25_lpf']]
+        so['ch_log']=pyuniden.constants.CH_LOGS[so['ch_log']]
+        so['disp_uid']=pyuniden.constants.ONOFF[so['disp_uid']]
+        so['g_att']=pyuniden.constants.ONOFF[so['g_att']]
+        so['p25_lpf']=pyuniden.constants.ONOFF[so['p25_lpf']]
 
 
         d={'backlight':bl, 'battery_info':bi, 'com_port':cp, 'key_beep':kb, 'opening_message':om,
@@ -181,14 +181,14 @@ class Settings(object):
 
         if backlight: backlight['event']=scanner_events[backlight['event']]
         if backlight: backlight['dimmer']=scanner_dimmers[backlight['dimmer']]
-        if battery_info: battery_info['bat_save']=uniden_api.constants.SCANNER_ONOFF[battery_info['bat_save']]
-        if key_beep: key_beep['lock']=uniden_api.constants.SCANNER_ONOFF[key_beep['lock']]
-        if key_beep: key_beep['safe']=uniden_api.constants.SCANNER_ONOFF[key_beep['safe']]
+        if battery_info: battery_info['bat_save']=pyuniden.constants.SCANNER_ONOFF[battery_info['bat_save']]
+        if key_beep: key_beep['lock']=pyuniden.constants.SCANNER_ONOFF[key_beep['lock']]
+        if key_beep: key_beep['safe']=pyuniden.constants.SCANNER_ONOFF[key_beep['safe']]
         if priority_mode: priority_mode['pri_mode']=scanner_pri_modes[priority_mode['pri_mode']]
         if scanner_option: scanner_option['ch_log']=scanner_ch_logs[scanner_option['ch_log']]
-        if scanner_option: scanner_option['disp_uid']=uniden_api.constants.SCANNER_ONOFF[scanner_option['disp_uid']]
-        if scanner_option: scanner_option['g_att']=uniden_api.constants.SCANNER_ONOFF[scanner_option['g_att']]
-        if scanner_option: scanner_option['p25_lpf']=uniden_api.constants.SCANNER_ONOFF[scanner_option['p25_lpf']]
+        if scanner_option: scanner_option['disp_uid']=pyuniden.constants.SCANNER_ONOFF[scanner_option['disp_uid']]
+        if scanner_option: scanner_option['g_att']=pyuniden.constants.SCANNER_ONOFF[scanner_option['g_att']]
+        if scanner_option: scanner_option['p25_lpf']=pyuniden.constants.SCANNER_ONOFF[scanner_option['p25_lpf']]
 
         if backlight: self.backlight=backlight
         if battery_info: self.battery_info=battery_info
@@ -208,7 +208,7 @@ class System:
 
     def __init__(self, scanner, sys_index):
 
-        self.logger = logging.getLogger('uniden_api.System')
+        self.logger = logging.getLogger('pyuniden.System')
 
         self.scanner = scanner
         self.sys_index = sys_index
@@ -436,7 +436,7 @@ class System:
         print ('AGC Setting for Analog Audio:\t%s') % self.agc_analog
         print ('AGC Setting for Digital Audio:\t%s') % self.agc_digital
         print ('P25 Waiting time:\t\t%s') % self.p25waiting
-        print ('Protect:\t\t\t%s') % uniden_api.constants.HUMAN_ONOFF[self.protect]
+        print ('Protect:\t\t\t%s') % pyuniden.constants.HUMAN_ONOFF[self.protect]
 
 
         if self.sys_type <> 'CNV':
@@ -492,17 +492,17 @@ class System:
         tag = self.number_tag
 
         if self.agc_analog is not '':
-            agca = uniden_api.constants.HUMAN_ONOFF[self.agc_analog]
+            agca = pyuniden.constants.HUMAN_ONOFF[self.agc_analog]
         else:
             agca = ''
 
         if self.agc_digital is not '':
-            agcd = uniden_api.constants.HUMAN_ONOFF[self.agc_digital]
+            agcd = pyuniden.constants.HUMAN_ONOFF[self.agc_digital]
         else:
             agcd=''
 
         pw = self.p25waiting
-        pr = uniden_api.constants.HUMAN_ONOFF[self.protect]
+        pr = pyuniden.constants.HUMAN_ONOFF[self.protect]
 
         ids = human_id_search[self.id_search]
         if self.s_bit: sb=human_sbit[self.s_bit]
@@ -510,7 +510,7 @@ class System:
         if self.afs: afs=human_afs[self.afs]
         if self.mot_id: mi=human_mot_id[self.mot_id]
         if self.emg_pattern: ep=human_altp[self.emg_pattern]
-        if self.pri_id_scan: pis=uniden_api.constants.HUMAN_ONOFF[self.pri_id_scan]
+        if self.pri_id_scan: pis=pyuniden.constants.HUMAN_ONOFF[self.pri_id_scan]
 
         ql=list(self.quick_lockout)
         lt=list(self.lout_tgids)
@@ -562,9 +562,9 @@ class System:
 
         self.sys_type = scanner_sys_type[type]
         self.lout = scanner_lout[lockout]
-        self.agc_analog = uniden_api.constants.SCANNER_ONOFF[agc_analog]
-        self.agc_digital = uniden_api.constants.SCANNER_ONOFF[agc_digital]
-        self.protected = uniden_api.constants.SCANNER_ONOFF[protected]
+        self.agc_analog = pyuniden.constants.SCANNER_ONOFF[agc_analog]
+        self.agc_digital = pyuniden.constants.SCANNER_ONOFF[agc_digital]
+        self.protected = pyuniden.constants.SCANNER_ONOFF[protected]
         self.id_search=scanner_id_search[id_mode]
         self.s_bit=scanner_sbit[status]
         self.end_code=scanner_end_code[end_code]
@@ -572,7 +572,7 @@ class System:
         self.emgl=scanner_alert_tlevels[alert_lvl]
         self.mot_id=scanner_mot_id[id_format]
         self.emg_pattern=scanner_altp[pattern]
-        self.pri_id_scan=uniden_api.constants.SCANNER_ONOFF[priority]
+        self.pri_id_scan=pyuniden.constants.SCANNER_ONOFF[priority]
 
         for grp in groups:
             # append grp
@@ -686,11 +686,11 @@ class Group(object):
     """Scanner Group class."""
 
     logger = logging.getLogger(__name__)
-    logger.setLevel(uniden_api.constants.LOG_LEVEL)
+    logger.setLevel(pyuniden.constants.LOG_LEVEL)
 
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(uniden_api.constants.LOG_LEVEL)
-    console_handler.setFormatter(uniden_api.constants.LOG_FORMAT)
+    console_handler.setLevel(pyuniden.constants.LOG_LEVEL)
+    console_handler.setFormatter(pyuniden.constants.LOG_FORMAT)
 
     logger.addHandler(console_handler)
     logger.propagate = False
@@ -791,7 +791,7 @@ class Group(object):
         print ('North or South Latitude:\t\%s') % self.latitude
         print ('West or East Longitude:\t\t%s') % self.longitude
         print ('Range:\t\t\t\t%s') % self.grp_range
-        print ('GPS Location detection:\t\t%s') % uniden_api.constants.HUMAN_ONOFF[self.gps_enable]
+        print ('GPS Location detection:\t\t%s') % pyuniden.constants.HUMAN_ONOFF[self.gps_enable]
 
     def show_brief(self):
         """Shows brief group data: index, name, channels or tgids."""
@@ -807,7 +807,7 @@ class Group(object):
         lat=self.latitude
         lon=self.longitude
         gr=self.grp_range
-        gps=uniden_api.constants.HUMAN_ONOFF[self.gps_enable]
+        gps=pyuniden.constants.HUMAN_ONOFF[self.gps_enable]
 
         channels=[]
         for i in sorted(self.channels): channels.append(self.channels[i].dump())
@@ -835,7 +835,7 @@ class Group(object):
         self.grp_type=type.upper()
 
         self.lout=scanner_lout[lockout]
-        self.gps_enable=uniden_api.constants.SCANNER_ONOFF[gps]
+        self.gps_enable=pyuniden.constants.SCANNER_ONOFF[gps]
 
         for tgid in tgids:
             # append tgid
@@ -893,11 +893,11 @@ class Site(object):
     """Scanner Site class."""
 
     logger = logging.getLogger(__name__)
-    logger.setLevel(uniden_api.constants.LOG_LEVEL)
+    logger.setLevel(pyuniden.constants.LOG_LEVEL)
 
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(uniden_api.constants.LOG_LEVEL)
-    console_handler.setFormatter(uniden_api.constants.LOG_FORMAT)
+    console_handler.setLevel(pyuniden.constants.LOG_LEVEL)
+    console_handler.setFormatter(pyuniden.constants.LOG_FORMAT)
 
     logger.addHandler(console_handler)
     logger.propagate = False
@@ -1027,7 +1027,7 @@ class Site(object):
         print ('Site Hold Time:\t\t\t%s') % self.hld
         print ('Lockout:\t\t\t%s') % human_lout[self.lout]
         print ('Modulation:\t\t\t%s') % self.mod
-        print ('Attenuation:\t\t\t%s') % uniden_api.constants.HUMAN_ONOFF[self.att]
+        print ('Attenuation:\t\t\t%s') % pyuniden.constants.HUMAN_ONOFF[self.att]
         print ('Control Channel Only:\t\t%s') % self.c_ch
         print ('Reverse Site Index:\t\t%s') % self.rev_index
         print ('Forward Site Index:\t\t%s') % self.fwd_index
@@ -1039,7 +1039,7 @@ class Site(object):
         print ('North or South Latitude:\t%s') % self.latitude
         print ('West or East Longitude:\t\t%s') % self.longitude
         print ('Range:\t\t\t\t%s') % self.sit_range
-        print ('GPS Location detection:\t\t%s') % uniden_api.constants.HUMAN_ONOFF[self.gps_enable]
+        print ('GPS Location detection:\t\t%s') % pyuniden.constants.HUMAN_ONOFF[self.gps_enable]
         print ('Band type for MOT/EDACS:\t\t%s') % self.mot_type
         print ('EDACS:\t\t\t\t%s') % self.edacs_type
         print ('P25 Waiting time:\t\t\t%s') % self.p25waiting
@@ -1074,13 +1074,13 @@ class Site(object):
         cch='on'
         qk=self.quick_key
         lout=human_lout[self.lout]
-        att=uniden_api.constants.HUMAN_ONOFF[self.att]
-        if self.c_ch: cch=uniden_api.constants.HUMAN_ONOFF[self.c_ch]
+        att=pyuniden.constants.HUMAN_ONOFF[self.att]
+        if self.c_ch: cch=pyuniden.constants.HUMAN_ONOFF[self.c_ch]
         sk=self.start_key
         lat=self.latitude
         lon=self.longitude
         sr=self.sit_range
-        gps=uniden_api.constants.HUMAN_ONOFF[self.gps_enable]
+        gps=pyuniden.constants.HUMAN_ONOFF[self.gps_enable]
         mt=self.mot_type
         et=self.edacs_type
         pw=self.p25waiting
@@ -1117,10 +1117,10 @@ class Site(object):
         self.quick_key=str(quick_key)
         self.start_key=str(start_key)
 
-        self.c_ch=uniden_api.constants.SCANNER_ONOFF[cch]
+        self.c_ch=pyuniden.constants.SCANNER_ONOFF[cch]
         self.lout=scanner_lout[lockout]
-        self.att=uniden_api.constants.SCANNER_ONOFF[attenuation]
-        self.gps_enable=uniden_api.constants.SCANNER_ONOFF[gps]
+        self.att=pyuniden.constants.SCANNER_ONOFF[attenuation]
+        self.gps_enable=pyuniden.constants.SCANNER_ONOFF[gps]
 
         for tf in trunk_frqs:
             # append trunk frequency
@@ -1132,11 +1132,11 @@ class Site(object):
 class Channel(object):
     """Scanner Channel class."""
     logger = logging.getLogger(__name__)
-    logger.setLevel(uniden_api.constants.LOG_LEVEL)
+    logger.setLevel(pyuniden.constants.LOG_LEVEL)
 
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(uniden_api.constants.LOG_LEVEL)
-    console_handler.setFormatter(uniden_api.constants.LOG_FORMAT)
+    console_handler.setLevel(pyuniden.constants.LOG_LEVEL)
+    console_handler.setFormatter(pyuniden.constants.LOG_FORMAT)
 
     logger.addHandler(console_handler)
     logger.propagate = False
@@ -1222,11 +1222,11 @@ class Channel(object):
         print ('Name:\t\t\t\t%s') % self.name
         print ('Channel Frequency:\t\t%s MHz') % frq_from_scanner(self.frq)
         print ('Modulation:\t\t\t%s') % self.mod
-        print ('Attenuation:\t\t\t%s') % uniden_api.constants.HUMAN_ONOFF[self.att]
+        print ('Attenuation:\t\t\t%s') % pyuniden.constants.HUMAN_ONOFF[self.att]
         print ('CTCSS/DCS Status:\t\t%s') % human_ctcss_dscs[self.dcs]
-        print ('CTCSS/DCS Tone Lockout:\t\t%s') % uniden_api.constants.HUMAN_ONOFF[self.tlock]
+        print ('CTCSS/DCS Tone Lockout:\t\t%s') % pyuniden.constants.HUMAN_ONOFF[self.tlock]
         print ('Lockout:\t\t\t%s') % human_lout[self.lout]
-        print ('Priority:\t\t\t%s') % uniden_api.constants.HUMAN_ONOFF[self.pri]
+        print ('Priority:\t\t\t%s') % pyuniden.constants.HUMAN_ONOFF[self.pri]
         print ('Alert Tone:\t\t\t%s') % human_alert_tones[self.alt]
         print ('Alert Tone Level:\t\t%s') % human_alert_tlevels[self.altl]
         print ('Reverse Channel Index:\t\t%s') % self.rev_index
@@ -1250,11 +1250,11 @@ class Channel(object):
     def dump(self):
         """Dumps group data to dictionary."""
         frq=frq_from_scanner(self.frq)
-        dcs=uniden_api.constants.HUMAN_CTCSS_DCS[self.dcs]
+        dcs=pyuniden.constants.HUMAN_CTCSS_DCS[self.dcs]
         tlock=human_lout[self.tlock]
         lout=human_lout[self.lout]
-        pri=uniden_api.constants.HUMAN_ONOFF[self.pri]
-        att=uniden_api.constants.HUMAN_ONOFF[self.att]
+        pri=pyuniden.constants.HUMAN_ONOFF[self.pri]
+        att=pyuniden.constants.HUMAN_ONOFF[self.att]
         if self.audio_type!='': audiot=human_audiot[self.audio_type]
         else: audiot=''
         altp=human_altp[self.alt_pattern]
@@ -1285,7 +1285,7 @@ class Channel(object):
         self.dcs=scanner_ctcss_dcs[dcs]
         self.lout=scanner_lout[lockout]
         self.tlock=scanner_lout[tone_lockout]
-        self.pri=uniden_api.constants.SCANNER_ONOFF[priority]
+        self.pri=pyuniden.constants.SCANNER_ONOFF[priority]
         self.alt=scanner_alert_tones[alert_tone]
         self.altl=scanner_alert_tlevels[alert_level]
         self.audio_type=scanner_audiot[audio_type]
@@ -1296,11 +1296,11 @@ class TrunkFrequency(object):
 
     """Scanner Trunk Frequency class."""
     logger = logging.getLogger(__name__)
-    logger.setLevel(uniden_api.constants.LOG_LEVEL)
+    logger.setLevel(pyuniden.constants.LOG_LEVEL)
 
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(uniden_api.constants.LOG_LEVEL)
-    console_handler.setFormatter(uniden_api.constants.LOG_FORMAT)
+    console_handler.setLevel(pyuniden.constants.LOG_LEVEL)
+    console_handler.setFormatter(pyuniden.constants.LOG_FORMAT)
 
     logger.addHandler(console_handler)
     logger.propagate = False
@@ -1394,11 +1394,11 @@ class TalkGroupID(object):
 
     """Scanner TalkGroupID class."""
     logger = logging.getLogger(__name__)
-    logger.setLevel(uniden_api.constants.LOG_LEVEL)
+    logger.setLevel(pyuniden.constants.LOG_LEVEL)
 
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(uniden_api.constants.LOG_LEVEL)
-    console_handler.setFormatter(uniden_api.constants.LOG_FORMAT)
+    console_handler.setLevel(pyuniden.constants.LOG_LEVEL)
+    console_handler.setFormatter(pyuniden.constants.LOG_FORMAT)
 
     logger.addHandler(console_handler)
     logger.propagate = False
@@ -1471,7 +1471,7 @@ class TalkGroupID(object):
         print ('Name:\t\t\t\t%s') % self.name
         print ('TGID:\t\t\t\t%s') % self.tgid
         print ('Lockout:\t\t\t%s') % human_lout[self.lout]
-        print ('Priority:\t\t\t%s') % uniden_api.constants.HUMAN_ONOFF[self.pri]
+        print ('Priority:\t\t\t%s') % pyuniden.constants.HUMAN_ONOFF[self.pri]
         print ('Alert Tone:\t\t\t%s') % human_alert_tones[self.alt]
         print ('Alert Tone Level:\t\t%s') % human_alert_tlevels[self.altl]
         print ('Reverse Channel Index:\t\t%s') % self.rev_index
@@ -1493,7 +1493,7 @@ class TalkGroupID(object):
         audiot='all'
         if self.audio_type: audiot=human_audiot[self.audio_type]
         lout=human_lout[self.lout]
-        pri=uniden_api.constants.HUMAN_ONOFF[self.pri]
+        pri=pyuniden.constants.HUMAN_ONOFF[self.pri]
         altp=human_altp[self.alt_pattern]
         vol=self.vol_offset
 
@@ -1514,7 +1514,7 @@ class TalkGroupID(object):
         self.alt_color=alert_color.upper()
 
         self.lout=scanner_lout[lockout]
-        self.pri=uniden_api.constants.SCANNER_ONOFF[priority]
+        self.pri=pyuniden.constants.SCANNER_ONOFF[priority]
         self.alt=scanner_alert_tones[alert_tone]
         self.altl=scanner_alert_tlevels[alert_level]
         self.audio_type=scanner_audiot[audio_type]
@@ -1526,11 +1526,11 @@ class Search(object):
 
     """Scanner Search class."""
     logger = logging.getLogger(__name__)
-    logger.setLevel(uniden_api.constants.LOG_LEVEL)
+    logger.setLevel(pyuniden.constants.LOG_LEVEL)
 
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(uniden_api.constants.LOG_LEVEL)
-    console_handler.setFormatter(uniden_api.constants.LOG_FORMAT)
+    console_handler.setLevel(pyuniden.constants.LOG_LEVEL)
+    console_handler.setFormatter(pyuniden.constants.LOG_FORMAT)
 
     logger.addHandler(console_handler)
     logger.propagate = False
@@ -1862,17 +1862,17 @@ class Search(object):
     def dump(self):
         """Dumps group data to dictionary."""
         scc=self.srch_close_call
-        scc['agc_analog']=uniden_api.constants.HUMAN_ONOFF[scc['agc_analog']]
-        scc['agc_digital']=uniden_api.constants.HUMAN_ONOFF[scc['agc_digital']]
-        scc['attenuate']=uniden_api.constants.HUMAN_ONOFF[scc['attenuate']]
-        scc['repeater']=uniden_api.constants.HUMAN_ONOFF[scc['repeater']]
-        scc['code_srch']=uniden_api.constants.HUMAN_CTCSS_DCS[scc['code_srch']]
+        scc['agc_analog']=pyuniden.constants.HUMAN_ONOFF[scc['agc_analog']]
+        scc['agc_digital']=pyuniden.constants.HUMAN_ONOFF[scc['agc_digital']]
+        scc['attenuate']=pyuniden.constants.HUMAN_ONOFF[scc['attenuate']]
+        scc['repeater']=pyuniden.constants.HUMAN_ONOFF[scc['repeater']]
+        scc['code_srch']=pyuniden.constants.HUMAN_CTCSS_DCS[scc['code_srch']]
 
         cc=self.close_call
         cc['pattern']=human_altp[cc['pattern']]
         cc['beep']=human_alert_tones[cc['beep']]
         cc['level']=human_alert_tlevels[cc['level']]
-        cc['override']=uniden_api.constants.HUMAN_ONOFF[cc['override']]
+        cc['override']=pyuniden.constants.HUMAN_ONOFF[cc['override']]
         cc['lockout']=human_lout[cc['lockout']]
         cc['mode']=human_cc_modes[cc['mode']]
 
@@ -1883,9 +1883,9 @@ class Search(object):
         ss=self.service_search
         indexes = (1,2,3,4,5,6,7,8,9,11,12,15)
         for i in indexes:
-            ss[i]['agc_analog']=uniden_api.constants.HUMAN_ONOFF[ss[i]['agc_analog']]
-            ss[i]['agc_digital']=uniden_api.constants.HUMAN_ONOFF[ss[i]['agc_digital']]
-            ss[i]['attenuation']=uniden_api.constants.HUMAN_ONOFF[ss[i]['attenuation']]
+            ss[i]['agc_analog']=pyuniden.constants.HUMAN_ONOFF[ss[i]['agc_analog']]
+            ss[i]['agc_digital']=pyuniden.constants.HUMAN_ONOFF[ss[i]['agc_digital']]
+            ss[i]['attenuation']=pyuniden.constants.HUMAN_ONOFF[ss[i]['attenuation']]
             ss[i]['lockout']=human_lout[ss[i]['lockout']]
 
         bsb=self.bcast_screen_band
@@ -1894,10 +1894,10 @@ class Search(object):
         for i in range(0,10):
             bsb[i]['limit_l']=frq_from_scanner(bsb[i]['limit_l'])
             bsb[i]['limit_h']=frq_from_scanner(bsb[i]['limit_h'])
-            cs[i]['agc_analog']=uniden_api.constants.HUMAN_ONOFF[cs[i]['agc_analog']]
-            cs[i]['agc_digital']=uniden_api.constants.HUMAN_ONOFF[cs[i]['agc_digital']]
-            cs[i]['attenuation']=uniden_api.constants.HUMAN_ONOFF[cs[i]['attenuation']]
-            cs[i]['cch']=uniden_api.constants.HUMAN_ONOFF[cs[i]['cch']]
+            cs[i]['agc_analog']=pyuniden.constants.HUMAN_ONOFF[cs[i]['agc_analog']]
+            cs[i]['agc_digital']=pyuniden.constants.HUMAN_ONOFF[cs[i]['agc_digital']]
+            cs[i]['attenuation']=pyuniden.constants.HUMAN_ONOFF[cs[i]['attenuation']]
+            cs[i]['cch']=pyuniden.constants.HUMAN_ONOFF[cs[i]['cch']]
             cs[i]['limit_l']=frq_from_scanner(cs[i]['limit_l'])
             cs[i]['limit_h']=frq_from_scanner(cs[i]['limit_h'])
             cs[i]['lockout']=human_lout[cs[i]['lockout']]
@@ -1934,11 +1934,11 @@ class Search(object):
         self.logger.debug('load(): srch_close_call dictionary '+str(srch_close_call))
 
         if 'agc_analog' not in srch_close_call: self.srch_close_call['agc_analog']=''
-        else: self.srch_close_call['agc_analog']=uniden_api.constants.SCANNER_ONOFF[srch_close_call['agc_analog']]
+        else: self.srch_close_call['agc_analog']=pyuniden.constants.SCANNER_ONOFF[srch_close_call['agc_analog']]
         if 'agc_digital' not in srch_close_call: self.srch_close_call['agc_digital']=''
-        else: self.srch_close_call['agc_digital']=uniden_api.constants.SCANNER_ONOFF[srch_close_call['agc_digital']]
+        else: self.srch_close_call['agc_digital']=pyuniden.constants.SCANNER_ONOFF[srch_close_call['agc_digital']]
         if 'attenuate' not in srch_close_call: self.srch_close_call['attenuate']=''
-        else: self.srch_close_call['attenuate']=uniden_api.constants.SCANNER_ONOFF[srch_close_call['attenuate']]
+        else: self.srch_close_call['attenuate']=pyuniden.constants.SCANNER_ONOFF[srch_close_call['attenuate']]
         if 'bscreen' not in srch_close_call: self.srch_close_call['bscreen']=''
         else: self.srch_close_call['bscreen']=srch_close_call['bscreen']
         if 'code_srch' not in srch_close_call: self.srch_close_call['code_srch']=''
@@ -1952,7 +1952,7 @@ class Search(object):
         if 'p25waiting' not in srch_close_call: self.srch_close_call['p25waiting']=''
         else: self.srch_close_call['p25waiting']=srch_close_call['p25waiting']
         if 'repeater' not in srch_close_call: self.srch_close_call['repeater']=''
-        else: self.srch_close_call['repeater']=uniden_api.constants.SCANNER_ONOFF[srch_close_call['repeater']]
+        else: self.srch_close_call['repeater']=pyuniden.constants.SCANNER_ONOFF[srch_close_call['repeater']]
 
         self.logger.debug('load(): close_call dictionary '+str(close_call))
         if 'band' not in close_call: self.close_call['band']=''
@@ -1972,7 +1972,7 @@ class Search(object):
         if 'number_tag' not in close_call: self.close_call['number_tag']=''
         else: self.close_call['number_tag']=close_call['number_tag']
         if 'override' not in close_call: self.close_call['override']=''
-        else: self.close_call['override']=uniden_api.constants.SCANNER_ONOFF[close_call['override']]
+        else: self.close_call['override']=pyuniden.constants.SCANNER_ONOFF[close_call['override']]
         if 'pattern' not in close_call: self.close_call['pattern']=''
         else: self.close_call['pattern']=scanner_altp[close_call['pattern']]
         if 'pause' not in close_call: self.close_call['pause']=''
@@ -2010,13 +2010,13 @@ class Search(object):
 
                 self.custom_search[i]={}
                 if 'agc_analog' not in custom_search[i]: self.custom_search[i].update({'agc_analog':''})
-                else: self.custom_search[i].update({'agc_analog':uniden_api.constants.SCANNER_ONOFF[custom_search[i]['agc_analog']]})
+                else: self.custom_search[i].update({'agc_analog':pyuniden.constants.SCANNER_ONOFF[custom_search[i]['agc_analog']]})
                 if 'agc_digital' not in custom_search[i]: self.custom_search[i].update({'agc_digital':''})
-                else: self.custom_search[i].update({'agc_digital':uniden_api.constants.SCANNER_ONOFF[custom_search[i]['agc_digital']]})
+                else: self.custom_search[i].update({'agc_digital':pyuniden.constants.SCANNER_ONOFF[custom_search[i]['agc_digital']]})
                 if 'attenuation' not in custom_search[i]: self.custom_search[i].update({'attenuation':''})
-                else: self.custom_search[i].update({'attenuation':uniden_api.constants.SCANNER_ONOFF[custom_search[i]['attenuation']]})
+                else: self.custom_search[i].update({'attenuation':pyuniden.constants.SCANNER_ONOFF[custom_search[i]['attenuation']]})
                 if 'cch' not in custom_search[i]: self.custom_search[i].update({'cch':''})
-                else: self.custom_search[i].update({'cch':uniden_api.constants.SCANNER_ONOFF[custom_search[i]['cch']]})
+                else: self.custom_search[i].update({'cch':pyuniden.constants.SCANNER_ONOFF[custom_search[i]['cch']]})
                 if 'delay' not in custom_search[i]: self.custom_search[i].update({'delay':''})
                 else: self.custom_search[i].update({'delay':custom_search[i]['delay']})
                 if 'hold' not in custom_search[i]: self.custom_search[i].update({'hold':''})
@@ -2079,11 +2079,11 @@ class Search(object):
 
                 self.service_search[i]={}
                 if 'agc_analog' not in service_search[i]: self.service_search[i].update({'agc_analog':''})
-                else: self.service_search[i].update({'agc_analog':uniden_api.constants.SCANNER_ONOFF[service_search[i]['agc_analog']]})
+                else: self.service_search[i].update({'agc_analog':pyuniden.constants.SCANNER_ONOFF[service_search[i]['agc_analog']]})
                 if 'agc_digital' not in service_search[i]: self.service_search[i].update({'agc_digital':''})
-                else: self.service_search[i].update({'agc_digital':uniden_api.constants.SCANNER_ONOFF[service_search[i]['agc_digital']]})
+                else: self.service_search[i].update({'agc_digital':pyuniden.constants.SCANNER_ONOFF[service_search[i]['agc_digital']]})
                 if 'attenuation' not in service_search[i]: self.service_search[i].update({'attenuation':''})
-                else: self.service_search[i].update({'attenuation':uniden_api.constants.SCANNER_ONOFF[service_search[i]['attenuation']]})
+                else: self.service_search[i].update({'attenuation':pyuniden.constants.SCANNER_ONOFF[service_search[i]['attenuation']]})
                 if 'delay' not in service_search[i]: self.service_search[i].update({'delay':''})
                 else: self.service_search[i].update({'delay':service_search[i]['delay']})
                 if 'hold' not in service_search[i]: self.service_search[i].update({'hold':''})

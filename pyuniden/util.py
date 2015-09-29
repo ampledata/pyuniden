@@ -3,7 +3,7 @@
 
 import logging
 
-module_logger = logging.getLogger('uniden_api')
+module_logger = logging.getLogger('pyuniden')
 
 def zero_to_head(t):
     l = list(t)

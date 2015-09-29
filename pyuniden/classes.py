@@ -19,7 +19,7 @@ import pyuniden.constants
 class UnidenScannerError(Exception):
     pass
 
-class CommandError(UnidenScannerError):
+class UnidenCommandError(UnidenScannerError):
     pass
 
 class ModulationError(UnidenScannerError):
@@ -82,21 +82,20 @@ class UnidenScanner(object):
 
     def raw(self, cmd):
         """Wrapper for raw scanner command"""
-        f2='OK'
+        f2 = 'OK'
+        self.logger.debug('cmd=%s', cmd)
 
-        self.logger.debug('raw(): cmd %s' % cmd)
-        self.serial.write("".join([cmd,'\r']))
-
+        self.serial.write(''.join([cmd, '\r']))
         res = (self.serial.readall()).strip('\r')
-        self.logger.debug('raw(): res %s' % res)
+        self.logger.debug('res=%s', res)
 
         if res.count(',') == 1:
-            f2=res.split(',')[1]
+            f2 = res.split(',')[1]
         else:
-            f2=res
+            f2 = res
 
         if f2 in self.ERR_LIST:
-            raise CommandError
+            raise UnidenCommandError, "Scanner returned ERR '%s'" % f2
         else:
             return res
 
@@ -123,8 +122,11 @@ class UnidenScanner(object):
         return dict
 
     def get_reception_status(self):
-        """Get reception status.
+        """
+        Gets reception status.
+
         The Scanner returns GLG,,,,,,,,,[\r] until it detects a frequency or a TGID.
+
         FRQ/TGID    Frequency or TGID
         MOD        Modulation (AM/FM/NFM/WFM/FMB)
         ATT        Attenuation (0:OFF / 1:ON)
@@ -137,18 +139,14 @@ class UnidenScanner(object):
         SYS_TAG        Current system number tag (0-999/NONE)
         CHAN_TAG    Current channel number tag (0-999/NONE)
         P25NAC        P25 NAC Status ( 0-FFF: 0-FFF / NONE: Nac None)
+
         """
+        ret_keys = [
+            'frq_tgid', 'mod', 'att', 'ctcss_dcs', 'name1', 'name2',
+            'name3', 'sql', 'mute', 'sys_tag', 'chan_tag', 'p25nac'
+        ]
         res = self.raw('GLG')
-
-        (cmd,frq_tgid,mod,att,ctcss_dcs,name1,name2,name3,
-         sql,mut,sys_tag,chan_tag,p25nac)=res.split(",")
-
-        dict={'frq_tgid':frq_tgid, 'mod':mod, 'att':att,
-            'ctcss_dcs':ctcss_dcs, 'name1':name1, 'name2':name2,
-            'name3':name3, 'sql':sql, 'mute':mut, 'sys_tag':sys_tag,
-            'chan_tag':chan_tag, 'p25nac':p25nac}
-
-        return dict
+        return dict(zip(ret_keys, res.split(',')[1:]))
 
     def get_current_status(self):
         """Returns current scanner status.

@@ -7,8 +7,10 @@ import logging
 
 LOG_LEVEL = logging.DEBUG
 
-LOG_FORMAT = ('%(asctime)s %(levelname)s %(name)s.%(funcName)s: %(lineno)d'
-              ' - %(message)s')
+LOG_FORMAT = logging.Formatter(
+    '%(asctime)s %(levelname)s %(name)s.%(funcName)s: %(lineno)d'
+    ' - %(message)s'
+)
 
 ONOFF = {'0':  'off', '1':  'on'}
 

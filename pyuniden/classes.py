@@ -71,7 +71,7 @@ class UnidenScanner(object):
         try:
             self.serial=serial.Serial(port,speed,timeout=0.1)
         except serial.SerialException:
-            self.logger.error('Error opening serial port %s!' % port)
+            self.logger.error('Error opening serial port %s!', port)
 
     def close(self):
         if self.serial.isOpen():

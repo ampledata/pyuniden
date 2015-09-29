@@ -52,14 +52,16 @@ class UnidenScanner(object):
         self.program_mode=False
         self.system_index_head=None
         self.system_index_tail=None
-        self.settings=Settings(self)
+        #self.settings=Settings(self)
+        self.settings = {}
         self.quick_lockout=()
         self.systems={}
-        self.searches=Search(self)
+        #self.searches=Search(self)
+        self.searches = {}
         self.free_memory_block=None
         self.used_memory_block={}
         self.default_band_coverage = ()
-        
+
         self.open(self.port, self.speed)
 
     def open(self, port, speed):

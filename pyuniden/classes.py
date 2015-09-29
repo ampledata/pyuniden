@@ -150,6 +150,7 @@ class UnidenScanner(object):
 
     def get_current_status(self):
         """Returns current scanner status.
+
         DSP_FORM    Display Form (4 - 8dight:########) (each # is 0 or 1) 0 means Small Font / 1 means Large Font.
         Lx_CHAR        Linex Characters 16char (fixed length)
         Lx_MODE        Linex Display Mode 16char
@@ -161,19 +162,21 @@ class UnidenScanner(object):
         BK_COLOR    Backlight Color (OFF,BLUE,RED,MAGENTA,GREEN,CYAN,YELLOW,WHITE)
         BK_DIMMER    Backlight Dimmer (0:OFF / 1:Low / 2:Middle / 3:High )
         """
+        ret_keys = [
+            'dsp_form', 'lx_char', 'lx_mode', 'sql', 'mut', 'bat', 'wat',
+            'sig_lvl', 'bk_color', 'bk_dimmer'
+        ]
         res = self.raw('STS')
+        return dict(zip(ret_keys, res.split(',')[1:]))
 
-        l=res.split(",")
-        n=len(l[1])
-
-        cm=l[2:n*2+1]
-        while (len(cm)<17): cm.append('')
-
-        dict={'dsp_form':l[0], 'char': tuple(cm[0::2]), 'mode': tuple(cm[1::2]),
-            'sql':l[-9], 'mut':l[-8], 'bat':l[-7], 'wat':l[-6], 'rsv1':l[-5],
-            'rsv2':l[-4], 'sig_lvl':l[-3], 'bk_color':l[-2], 'bk_dimmer':l[-1]}
-
-        return dict
+        #l=res.split(",")
+        #n=len(l[1])
+        #cm=l[2:n*2+1]
+        #while (len(cm)<17): cm.append('')
+        #dict={'dsp_form':l[0], 'char': tuple(cm[0::2]), 'mode': tuple(cm[1::2]),
+        #    'sql':l[-9], 'mut':l[-8], 'bat':l[-7], 'wat':l[-6], 'rsv1':l[-5],
+        #    'rsv2':l[-4], 'sig_lvl':l[-3], 'bk_color':l[-2], 'bk_dimmer':l[-1]}
+        #return dict
 
     def push_key(self, mode, key):
         """push_key method is used to push keys on the scanner
